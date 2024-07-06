@@ -5,16 +5,7 @@ import chatImage from '../ressources/images/chat.webp';
 import drapeauImage from '../ressources/images/drapeau-territoire-de-belfort.png'
 import { keyframes } from '@emotion/react';
 
-const growAnimation = keyframes`
-  0% {
-    opacity:0;
-    transform: scale(0.8); /* Commence petite */
-  }
-  100% {
-    opacity:1;
-    transform: scale(1); /* Atteint la taille normale */
-  }
-`;
+
 
 export default function Accueil() {
 

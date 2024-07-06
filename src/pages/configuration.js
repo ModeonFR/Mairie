@@ -15,6 +15,7 @@ export default function Configuration() {
     const [newTexte, setTexte] = React.useState("");
     const [newImage, setImage] = React.useState("");
     const [page, setPage] = React.useState(0);
+    const horaireDefaultValue = "Lundi: 13h-15h\nMardi: 13h-15h\nMercredi: Fermé\nJeudi: 13h-15h\nVendredi: 13h-15h"
 
     
     const imageMap = {
@@ -41,49 +42,96 @@ export default function Configuration() {
             </Box>
             <Box sx={{display:"flex", height: `calc(100vh - 64px - 64px)`}}>
             <Box sx={{display:"flex", flexDirection:"column", minWidth:"120px"}}>
-                <Button onClick={()=>{setShowArticle(null)}} sx={{ border:'0px solid grey', borderRightWidth:1, borderRightColor:page==0?"rgb(25,118,210)":"grey", borderRadius:0, backgroundColor:"white", color:page==0?"rgb(25,118,210)":"grey", '&:hover': {opacity:1, backgroundColor:"rgba(25,118,210,0.2)" }}}>Actualité</Button>
-                <Button onClick={()=>{setShowArticle(null)}} sx={{ border:'0px solid grey', borderRightWidth:1, borderRightColor:page==1?"rgb(25,118,210)":"grey",borderRadius:0,backgroundColor:"white",  color:page==1?"rgb(25,118,210)":"grey", '&:hover': {opacity:1, backgroundColor:"rgba(25,118,210,0.2)" }}}>Apparence</Button>
-                <Button onClick={()=>{setShowArticle(null)}} sx={{ border:'0px solid grey', borderRightWidth:1, borderRightColor:page==2?"rgb(25,118,210)":"grey",borderRadius:0, backgroundColor:"white", color:page==2?"rgb(25,118,210)":"grey", '&:hover': {opacity:1, backgroundColor:"rgba(25,118,210,0.2)" }}}>Infos</Button>
+                <Button onClick={()=>{setShowArticle(null); setPage(0)}} sx={{ border:'0px solid grey', borderRightWidth:1, borderRightColor:page==0?"rgb(25,118,210)":"grey", borderRadius:0, backgroundColor:"white", color:page==0?"rgb(25,118,210)":"grey", '&:hover': {opacity:1, backgroundColor:"rgba(25,118,210,0.2)" }}}>Actualité</Button>
+                <Button onClick={()=>{setShowArticle(null); setPage(1)}} sx={{ border:'0px solid grey', borderRightWidth:1, borderRightColor:page==1?"rgb(25,118,210)":"grey",borderRadius:0,backgroundColor:"white",  color:page==1?"rgb(25,118,210)":"grey", '&:hover': {opacity:1, backgroundColor:"rgba(25,118,210,0.2)" }}}>Apparence</Button>
+                <Button onClick={()=>{setShowArticle(null); setPage(2)}} sx={{ border:'0px solid grey', borderRightWidth:1, borderRightColor:page==2?"rgb(25,118,210)":"grey",borderRadius:0, backgroundColor:"white", color:page==2?"rgb(25,118,210)":"grey", '&:hover': {opacity:1, backgroundColor:"rgba(25,118,210,0.2)" }}}>Infos</Button>
                 <Box sx={{border:'0px solid grey', borderRightWidth:1, borderRightColor:"grey", height:"100%", opacity:0.2}}>
 
                 </Box>
             </Box>
 
             <Box sx={{display:"flex", flexDirection:"column", marginTop:5}}>
-                <Box sx={{ display: "flex", width: '100%', justifyContent: 'space-between' }}>
-                    <Typography component="div" sx={{fontSize:20, textAlign:"left", marginLeft:8}}>Actualités ({config.articles.length})</Typography>
-                    <Button onClick={()=>{setShowArticle(null)}} sx={{ backgroundColor:"rgb(25,118,210)", marginRight:5, color:"white", right:25, '&:hover': {opacity:0.8, backgroundColor:"rgb(25,118,210)" }}}>+ Nouveau</Button>
+                {page === 0 && 
+                <>
+                    <Box sx={{ display: "flex", width: '100%', justifyContent: 'space-between' }}>
+                        <Typography component="div" sx={{fontSize:20, textAlign:"left", marginLeft:8}}>Actualités ({config.articles.length})</Typography>
+                        <Button onClick={()=>{setShowArticle(null)}} sx={{ backgroundColor:"rgb(25,118,210)", marginRight:5, color:"white", right:25, '&:hover': {opacity:0.8, backgroundColor:"rgb(25,118,210)" }}}>+ Nouveau</Button>
 
                     </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', maxHeight: "70vh", overflowX: "auto"}}>
-                            {config.articles.slice(0).reverse().map((article, index) => (
-                                <Box onClick={()=>{openModifArticle(article)}} sx={{
-                                    boxShadow: '0px 0px 3px 3px rgba(0, 0, 0, 0.1)',
-                                    padding: 1,
-                                    margin: 2,
-                                    width: "10%",
-                                    transition: 'background-color 0.3s, cursor 0.3s',
-                                    animation: 'fadeIn 0.5s ease-in-out',
-                                    '@keyframes fadeIn': {
-                                        '0%': { opacity: 0, transform: 'translateY(20px)' },
-                                        '100%': { opacity: 1, transform: 'translateY(0)' }
-                                    },
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                                        cursor: 'pointer'
-                                    }
-                                }} key={index}>
-                                    <img 
-                                        src={imageMap[article.img]} 
-                                        style={{ width: '100%', height: 'auto' }}
-                                    />
-                                    <Typography component="div" sx={{ fontSize: 20 }}>{article.nom}</Typography>
-                                    <Typography component="div" sx={{ fontSize: 12 }}>{article.description}</Typography>
-                                </Box>
-                            ))}
-                        </Box>
-        
+                    <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', maxHeight: "70vh", overflowX: "auto", paddingBottom:15}}>
+                                {config.articles.slice(0).reverse().map((article, index) => (
+                                    <Box onClick={()=>{openModifArticle(article)}} sx={{
+                                        boxShadow: '0px 0px 3px 3px rgba(0, 0, 0, 0.1)',
+                                        padding: 1,
+                                        margin: 2,
+                                        width: "10%",
+                                        transition: 'background-color 0.3s, cursor 0.3s',
+                                        animation: 'fadeIn 0.5s ease-in-out',
+                                        '@keyframes fadeIn': {
+                                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                                        },
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                                            cursor: 'pointer'
+                                        }
+                                    }} key={index}>
+                                        <img 
+                                            src={imageMap[article.img]} 
+                                            style={{ width: '100%', height: 'auto' }}
+                                        />
+                                        <Typography component="div" sx={{ fontSize: 20 }}>{article.nom}</Typography>
+                                        <Typography component="div" sx={{ fontSize: 12 }}>{article.description}</Typography>
+                                    </Box>
+                                ))}  
                     </Box>
+                </>
+                }
+                {page === 1 && 
+                <>
+                </>
+                }
+                {page === 2 && 
+                <>
+                    <Box sx={{ display: "flex", width: '100%', justifyContent: 'space-between' }}>
+                        <Typography component="div" sx={{fontSize:20, textAlign:"left", marginLeft:8}}>Informations</Typography>
+                    </Box>
+                    <Box sx={{marginLeft:8, marginTop:5, display:"flex", flexDirection:"column", animation: 'fadeIn 0.5s ease-in-out','@keyframes fadeIn': {'0%': { opacity: 0, transform: 'translateY(20px)' },'100%': { opacity: 1, transform: 'translateY(0)' }},}}>
+                        <TextField
+                            label="Nom"
+                            defaultValue="Mairie de Modeon"
+                            sx={{width:300}}
+                        />
+                        <TextField
+                            label="Adresse physique"
+                            defaultValue="70 boulevard des laurentides, H7G0A9, Laval"
+                            sx={{marginTop:4, width:300}}
+                        />
+                        <TextField
+                            label="Numéro de téléphone"
+                            defaultValue="0351522355"
+                            sx={{marginTop:4, width:300}}
+                        />
+                        <TextField
+                            label="Email"
+                            defaultValue="exemple@gmail.com"
+                            sx={{marginTop:4, width:300}}
+                        />
+                        <TextField
+                            label="Horaires d'ouverture"
+                            multiline
+                            rows={5}
+                            defaultValue={horaireDefaultValue}
+                            InputProps={{
+                                style: { whiteSpace: 'pre-line' }
+                            }}
+                            sx={{marginTop:4, width:300}}
+                        />
+                    </Box>
+                </>
+                }
+            </Box>
+                
             </Box>
 
         </Box>
